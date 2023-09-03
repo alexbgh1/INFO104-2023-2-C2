@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-export default function Ejemplo1() {
+export default function Ejemplo3() {
   return (
     <div className="contenedor">
       <BasicUsage />

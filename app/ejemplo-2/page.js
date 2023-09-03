@@ -17,7 +17,7 @@ import {
 
 import { useRef } from "react";
 
-export default function Ejemplo1() {
+export default function Ejemplo2() {
   return (
     <div className="contenedor">
       <DrawerExample />

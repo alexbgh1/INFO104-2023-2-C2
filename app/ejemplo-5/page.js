@@ -3,7 +3,7 @@
 
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 
-export default function Page() {
+export default function Ejemplo5() {
   return (
     <div
       className="contenedor"

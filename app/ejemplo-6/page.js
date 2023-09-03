@@ -3,7 +3,7 @@
 
 import { Button, useToast } from "@chakra-ui/react";
 
-export default function Page() {
+export default function Ejemplo6() {
   const toast = useToast();
 
   return (
