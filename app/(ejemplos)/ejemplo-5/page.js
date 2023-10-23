@@ -1,21 +1,47 @@
-import ListaDePersonas from "./ListaDePersonas";
+"use client";
+import ListItemComment from "@/app/components/ListItemComment";
+// Eliminar UN comentario
 
-// Hacemos la carga de información desde el servidor
-const fetchData = async () => {
-  const response = await import("../../api/ejemplo-1/ejemplo-1", {
-    method: "GET",
-  });
-  // response es un objeto que tiene muchas propiedades, entre ellas "miArreglo"
-  const data = response.miArreglo;
-  console.log("Obteniendo datos desde SERVIDOR:", response.miArreglo);
-  return data;
-};
+import { useState } from "react";
+import { Input, Button, Text, Container, Box } from "@chakra-ui/react";
 
-export default async function Ejemplo5() {
-  const data = await fetchData(); // Esperamos a que la función fetchData termine de ejecutarse
+export default function Ejemplo5() {
+  const [id, setId] = useState(""); // id del comentario a eliminar
+  const [comentario, setComentario] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const sendDeleteAction = async () => {
+      const response = await fetch(`/api/ejemplo-5/${id}`, {
+        method: "DELETE",
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      setComentario(data);
+    };
+    sendDeleteAction();
+  };
+
   return (
-    <div className="container center">
-      <ListaDePersonas data={data} />
+    <div className="contenedor">
+      <Container>
+        <Box>
+          <Text fontSize="xl" fontWeight="bold" mb={4}>
+            Eliminar UN comentario por ID
+          </Text>
+          <form onSubmit={handleSubmit}>
+            <Input placeholder="Eliminar por ID" mb={4} onChange={(e) => setId(e.target.value)} value={id} />
+            <Button type="submit">Eliminar</Button>
+          </form>
+          <Box>
+            <Text fontSize="xl" fontWeight="bold" mb={4} color="red.500">
+              {comentario.message && <Text>{comentario.message}</Text>}
+            </Text>
+            <ListItemComment comentario={comentario} />
+          </Box>
+        </Box>
+      </Container>
     </div>
   );
 }

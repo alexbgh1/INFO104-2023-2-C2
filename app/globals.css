@@ -14,6 +14,22 @@
   color: #000;
 }
 
+.link {
+  text-decoration: none;
+  color: #505050;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #4557f5;
+}
+
+.accent {
+  color: #4557f5;
+}
+
 .contenedor {
   max-width: 1200px;
   margin: 0 auto;

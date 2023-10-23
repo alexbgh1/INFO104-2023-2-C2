@@ -1,42 +1,43 @@
 "use client";
+import ListItemComment from "@/app/components/ListItemComment";
+// Solicitamos UN los comentarios
 
-import { useState, useEffect } from "react";
-import { Container, Box, Input } from "@chakra-ui/react";
+import { useState } from "react";
+import { Input, Button, Text, Container, Box } from "@chakra-ui/react";
 
 export default function Ejemplo2() {
-  const [nombre, setNombre] = useState("");
-  const [color, setColor] = useState("red");
-  const colores = [
-    "red",
-    "blue",
-    "green",
-    "yellow",
-    "orange",
-    "purple",
-    "pink",
-  ];
+  const [id, setId] = useState(""); // id del comentario a buscar
+  const [comentario, setComentario] = useState({});
 
-  // Los useEffect también se ejecutan de manera secuencial
-  useEffect(() => {
-    console.log("Cada vez que cambia 'nombre' se ejecuta este console.log()");
-    const randomChoice = Math.floor(Math.random() * colores.length);
-    setColor(colores[randomChoice]);
-  }, [nombre]);
-
-  useEffect(() => {
-    console.log("Esto se ejecuta solo una vez al cargar la página");
-    setColor("black");
-  }, []);
-
-  const handleInput = (e) => {
-    setNombre(e.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fetchData = async () => {
+      const response = await fetch("/api/ejemplo-2/" + id);
+      const data = await response.json();
+      console.log(data);
+      setComentario(data);
+    };
+    fetchData();
   };
 
   return (
     <div className="contenedor">
       <Container>
-        <Input placeholder="Nombre" value={nombre} onChange={handleInput} />
-        <Box w="100%" h="100px" bg={color}></Box>
+        <Box>
+          <Text fontSize="xl" fontWeight="bold" mb={4}>
+            Obtener UN comentario por ID
+          </Text>
+          <form onSubmit={handleSubmit}>
+            <Input placeholder="Buscar por ID" mb={4} onChange={(e) => setId(e.target.value)} value={id} />
+            <Button type="submit">Buscar</Button>
+          </form>
+          <Box>
+            <Text fontSize="xl" fontWeight="bold" mb={4} color="red.500">
+              {comentario.message && <Text>{comentario.message}</Text>}
+            </Text>
+            <ListItemComment comentario={comentario} />
+          </Box>
+        </Box>
       </Container>
     </div>
   );

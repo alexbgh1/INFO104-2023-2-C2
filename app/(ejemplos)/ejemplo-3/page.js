@@ -1,47 +1,44 @@
 "use client";
+import ListComments from "@/app/components/ListComments";
+// Solicitamos TODOS los comentarios que coincidan con idApp
 
-import { useState, useEffect } from "react";
-import {
-  Container,
-  Card,
-  CardBody,
-  CardHeader,
-  CircularProgress,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Input, Button, Text, Container, Box } from "@chakra-ui/react";
 
 export default function Ejemplo3() {
-  const [numero, setNumero] = useState(0);
+  const [idApp, setIdApp] = useState(""); // idApp de los comentarios a buscar
+  const [comentarios, setComentarios] = useState([]);
 
-  useEffect(() => {
-    // Intervalo "setInterval( () => {...}, delay )"
-    const intervalo = setInterval(() => {
-      setNumero((prev) => prev + 1);
-    }, 1000);
-    // Limpia el intervalo cuando se desmonta el componente
-    // desmontar: Ejemplo al cambiar de página, o dejar de cargar el componente
-    return () => {
-      clearInterval(intervalo);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const fetchData = async () => {
+      // Query : idApp
+      const response = await fetch("/api/ejemplo-3?idApp=" + idApp);
+      const data = await response.json();
+      console.log(data);
+      setComentarios(data);
     };
-  }, []);
-
-  useEffect(() => {
-    if (numero === 101) {
-      setNumero(0);
-      alert("Se reiniciará el contador");
-    }
-  }, [numero]);
+    fetchData();
+  };
 
   return (
-    <div className="contenedor center">
+    <div className="contenedor">
       <Container>
-        <Card align="center">
-          <CardHeader fontSize="2xl" fontWeight="bold">
-            {numero}
-          </CardHeader>
-          <CardBody>
-            <CircularProgress value={numero} />
-          </CardBody>
-        </Card>
+        <Box>
+          <Text fontSize="xl" fontWeight="bold" mb={4}>
+            Obtener comentarios por idApp
+          </Text>
+          <form onSubmit={handleSubmit}>
+            <Input placeholder="Buscar por idApp" mb={4} onChange={(e) => setIdApp(e.target.value)} value={idApp} />
+            <Button type="submit">Buscar</Button>
+          </form>
+          <Box>
+            <Text fontSize="xl" fontWeight="bold" mb={4} color="red.500">
+              {comentarios.message && <Text>{comentario.message}</Text>}
+            </Text>
+            <ListComments comentarios={comentarios} />
+          </Box>
+        </Box>
       </Container>
     </div>
   );
