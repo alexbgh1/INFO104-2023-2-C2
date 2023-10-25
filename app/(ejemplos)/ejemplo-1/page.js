@@ -12,7 +12,6 @@ export default function Ejemplo1() {
       const response = await fetch("/api/ejemplo-1");
       const data = await response.json();
       setComentarios(data);
-      console.log(data);
     };
     fetchData();
   }, []);

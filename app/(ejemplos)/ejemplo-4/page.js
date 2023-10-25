@@ -18,7 +18,7 @@ export default function Ejemplo4() {
       <Container>
         <Box>
           <Text fontSize="xl" fontWeight="bold" mb={4}>
-            Crear y eliminar un comentario
+            Crear UN comentario
           </Text>
           <CrearComentario
             usuario={usuario}

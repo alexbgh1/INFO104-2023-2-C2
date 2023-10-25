@@ -30,6 +30,7 @@ const CrearComentario = ({
     const data = await response.json();
     console.log(data);
     setUltimoComentario(data);
+    alert("Comentario creado");
   };
 
   const handleSubmit = async (e) => {

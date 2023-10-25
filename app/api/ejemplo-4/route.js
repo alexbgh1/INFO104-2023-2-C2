@@ -1,5 +1,7 @@
 const API_URL = "https://info104-2023-2-db.onrender.com";
 
+// POST /api/comentarios: Crear un comentario
+
 export async function POST(req) {
   const body = await req.json();
   console.log(body);
